@@ -1,76 +1,32 @@
-Codingtest
-=========
+# Description of the task
+I didn't want to overengineer things here but also wanted to show best practices. Because of that I've picked up the simplest solution 
+that can be easily extended. The architecture is a mix of layers (presentation, UI, and persistence), divided into multiple dirs.
 
-### Setup
-System requirements:
-- PHP8.0+
-- Composer
+I've updated the PHP version in composer to use Symfony 7.3 packages and phpunit v.12.
+If for some reason this project can't use php 8.2 symfony and phpunit should be downgraded in `composer.json`.
 
-### Intro
-Hi and welcome to limango! You're now going to participate in
-a short coding test to see your ability to think logical, 
-to work independently with a given situation or environment and
-develop in a smart, goal-oriented way.
+I've decided to use Symfony kernel to be able to automatically use DI. This way it was easier for testing and extending.
 
-### Task
-Your stakeholder is the owner of a franchise of candy factory. Your product owner
-has given you the task of further extending a small candy machine for distribution. 
-The input should be the type of candy to be bought, 
-the amount of candy a potential customer could want and the amount he is
-going to pay with.
+I didn't add cs-fixer nor PHPStan for this project, for this moment changes made by linters won't be visible.
+I've also decided not to use deptrac for layer dependecy check,
+the architecture is simple enough, and the project is tiny.
 
-The candy and its prices are:
-- 'caramels', 4.99 €
-- 'lollipop', 2,99 €
-- 'mince drops', 0,69 €
-- 'chewing gum', 1,99 €
-- 'licorice', 3,59 €
+If in any future there is any other type of vending machine, it will implement an interface and use the 
+appropriate strategy for returning coins.
+As well, strategy can be easily extended. 
+Of course those are only future assumptions, the whole app could be easily done in one file without any DI
+or other sophisticated methods but just with a few functions inside one file.
 
-You ***don't*** have to think about currencies, there are only €!
-You can only buy one type of candy at a time.
+## Interfaces
+Original interfaces were intact to fit requirements.
 
-The result should be printed on the screen with the count and 
-the total amount of the purchased candy as well as a table 
-which tells the customer in which coin combination he is going
-to get his change.
+## Testing
+As mentioned PHPUnit v.12 was used.
+To run php unit tests run `php vendor/bin/phpunit` in project root.
+I've decided to make only a unit test to check logic in this project, 
+no Integration tests for the console application were needed as it was quick and simple to test.
 
-Example:
-
-```
-╭─user@limango:/home
-╰─$ php bin/console purchase-candy
-
-╰─$Please select your favorite candy
-  [0] caramels
-  [1] lollipop
-  [2] mince drops
-  [3] chewing gum
-  [4] licorice
-  
-╰─$ > 0
-
-╰─$Please input packs of candy you want to buy (Default: 1)> 2
-
-╰─$Please input your payment amount> 10
-```
-
-The output should be formatted as:
-```
-You bought 2 packs of caramels for 9,98 €, each for 4,99 € 
-Your change is:
-+-------+-------+
-| Coin  | Count |
-+-------+-------+
-| 0.02  | 1     |
-+-------+-------+
-
-╰─$ 
-```
-### Technical caveats
-You were given a base scaffolding for implementation to ensure interoperability 
-with the existing business. 
-
-Consider possible invalid states and have the machine give user feedback
-accordingly, e.g. "less money given than total cost of amount"
-
-You are free to clean up the Command class and use the console for DI.
+## Author
+Greg, Lord of PHP Solutions, Master of Golang Services, Warden of RESTful Gates, Keeper of gRPC Streams, 
+Protector of SQL Queries, Overlord of RabbitMQ Channels, Guardian of Redis Keys, Conqueror of Docker Containers, 
+High Architect of Kubernetes Realms, and Whisperer to Artificial Intelligences.

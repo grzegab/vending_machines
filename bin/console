@@ -3,11 +3,18 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use App\Command\PurchaseCandyCommand;
-use Symfony\Component\Console\Application;
+use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application as FrameworkApplication;
 
-$application = new Application();
+$kernel = new Kernel('dev', true);
 
-$application->add(new PurchaseCandyCommand());
+try {
+    $application = new FrameworkApplication($kernel);
+    $application->setName('Vending machine project');
+    $application->setVersion('1.0.0');
 
-$application->run();
+    exit($application->run());
+} catch (Throwable $e) {
+    fwrite(STDERR, 'Fatal error: ' . $e->getMessage() . PHP_EOL);
+    exit(1);
+}
